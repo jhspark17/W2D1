@@ -23,11 +23,18 @@ class Manager < Employee
     end
 
     def bonus(multiplier)
+        multiplier * get_sub_salary
+    end
+
+    def get_sub_salary
         sum = 0
         @employees.each do |employee|
+            if employee.class == Manager
+                sum += employee.get_sub_salary
+            end
             sum += employee.salary
         end
-        multiplier * sum
+        sum
     end
 
     def add_employee(employee)
@@ -44,8 +51,6 @@ if __FILE__ == $PROGRAM_NAME
 
     darren.add_employee(shawna)
     darren.add_employee(david)
-    ned.add_employee(david)
-    ned.add_employee(shawna)
     ned.add_employee(darren)
 
    p ned.bonus(5)
